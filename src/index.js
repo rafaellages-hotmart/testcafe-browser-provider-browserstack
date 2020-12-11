@@ -1,5 +1,6 @@
 import { parse as parseUrl } from 'url';
 import Promise from 'pinkie';
+import fs from 'fs';
 import { promisify } from 'util';
 import parseCapabilities from 'desired-capabilities';
 import { pickBy } from 'lodash';
