@@ -137,12 +137,17 @@ module.exports = {
     },
 
     _getCapabilitiesFromConfig () {
-        const configPath = process.env.BROWSERSTACK_CAPABILITIES_CONFIG_PATH;
+        const defaultConfigPath = './browserstackConfig.js';
+        const configPath = process.env.BROWSERSTACK_CAPABILITIES_CONFIG_PATH || defaultConfigPath;
 
-        if (!configPath)
+        if (!fs.existsSync(configPath)) {
+            if (configPath !== defaultConfigPath) {
+                // eslint-disable-next-line
+                console.warn('Could not find the file:', configPath);
+            }
             return {};
-
-        return require(configPath);
+        }
+        return require(fs.realpathSync(configPath));
     },
 
     _getAdditionalCapabilities () {
